@@ -5,6 +5,7 @@ Add doca-repo.deb /tmp/
 ADD qemu-aarch64-static /usr/bin/
 
 WORKDIR /root/workspace
+ADD build.conf .
 ADD install.sh .
 ADD create_bfb .
 ADD mlxbf-bootimages.deb .
@@ -18,6 +19,7 @@ RUN mkdir -p /run/systemd; echo docker > /run/systemd/container
 
 RUN apt update
 RUN apt upgrade -y
+
 RUN apt remove --purge -y snapd plymouth
 RUN apt autoremove -y
 RUN apt install -y grub-efi-arm64-signed grub-efi-arm64-bin shim-signed watchdog binutils sbsigntool rasdaemon net-tools nfs-common iptables-persistent rsync tcpdump nvme-cli iputils-arping iputils-ping iputils-tracepath bridge-utils iperf3 bc lm-sensors ifenslave acpid network-manager kexec-tools i2c-tools dc lldpad unzip ipmitool

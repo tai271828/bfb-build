@@ -275,6 +275,39 @@ sudo cp /lib/udev/rules.d/82-net-setup-link.rules ./lib/udev/rules.d/82-net-setu
 sudo mkdir -p ./etc/infiniband
 sudo cp /etc/infiniband/vf-net-link-name.sh ./etc/infiniband/vf-net-link-name.sh
 
+# script to add repositories and install packages
+cat /root/workspace/build.conf
+source /root/workspace/build.conf
+PPA="deb https://$PPA_ACCESS_TOKEN@$PPA_BASE"
+PPA_SOURCE_LIST=/etc/apt/sources.list.d/elbridge-ppa.list
+echo $PPA
+echo $PPA_KEY_INFO
+
+cat > hook.sh << EOF
+#!/bin/sh
+
+set -ex
+
+## add repositories
+echo $PPA >> $PPA_SOURCE_LIST
+apt-key adv --recv-keys --keyserver keyserver.ubuntu.com --verbose $PPA_KEY_INFO
+apt update
+
+ls /etc/apt/sources.list.d/
+cat $PPA_SOURCE_LIST
+
+DEBIAN_FRONTEND=noninteractive apt -y install linux-bluefield linux-tools-bluefield
+
+## set environment variables
+echo ====== export ======
+export | sort
+echo ====== env ======
+env | sort
+EOF
+chmod +x hook.sh
+./hook.sh
+rm -f hook.sh
+
 sudo mkdir -p mnt
 
 ex mkdir -p ubuntu
