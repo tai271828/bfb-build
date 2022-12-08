@@ -291,6 +291,9 @@ set -ex
 ## add repositories
 echo $PPA >> $PPA_SOURCE_LIST
 apt-key adv --recv-keys --keyserver keyserver.ubuntu.com --verbose $PPA_KEY_INFO
+# workaround for NVBF3-28 and LP:#1990528
+# hard-coded source list contains nonexistent repo
+rm -f /etc/apt/sources.list.d/doca.list
 apt update
 
 ls /etc/apt/sources.list.d/
