@@ -279,9 +279,15 @@ sudo cp /etc/infiniband/vf-net-link-name.sh ./etc/infiniband/vf-net-link-name.sh
 cat /root/workspace/build.conf
 source /root/workspace/build.conf
 PPA="deb https://$PPA_ACCESS_TOKEN@$PPA_BASE"
-PPA_SOURCE_LIST=/etc/apt/sources.list.d/elbridge-ppa.list
+PPA_SOURCE_LIST=/etc/apt/sources.list.d/private-ppa.list
 echo $PPA
 echo $PPA_KEY_INFO
+
+cat > /etc/apt/sources.list.d/ubuntu-jammy-proposed.list << EOF
+# Enable Ubuntu proposed archive
+deb http://ports.ubuntu.com/ubuntu-ports jammy-proposed restricted main multiverse universe
+EOF
+
 
 cat > hook.sh << EOF
 #!/bin/sh
