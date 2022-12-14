@@ -305,7 +305,7 @@ apt update
 ls /etc/apt/sources.list.d/
 cat $PPA_SOURCE_LIST
 
-DEBIAN_FRONTEND=noninteractive apt -y install linux-bluefield linux-tools-bluefield
+DEBIAN_FRONTEND=noninteractive apt -y install linux-bluefield linux-tools-bluefield linux-bluefield-modules
 
 ## set environment variables
 echo ====== export ======
