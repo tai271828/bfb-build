@@ -52,9 +52,15 @@ mkdir -p $WDIR
 wget --no-verbose -O $WDIR/mlxbf-bootimages.deb https://linux.mellanox.com/public/repo/doca/tmp/ubuntu22.04/aarch64/mlxbf-bootimages_4.0.bu1-12263_arm64.deb
 wget --no-verbose -O $WDIR/doca-repo.deb https://linux.mellanox.com/public/repo/doca/tmp/ubuntu22.04/aarch64/doca-repo-aarch64-ubuntu2204-local_1.4.0078-1.5.7.0.3.2.0.bf.4.0.bu1.12263_arm64.deb
 
+BUILD_STAMP="build-stamp.txt"
+commit_hash=$( git show -s --format=%h )
+build_date=$( date +%Y%M%d-%H%M%S)
+echo ${commit_hash}-${build_date} > ./$BUILD_STAMP
+
 cp	Dockerfile \
 	create_bfb \
 	install.sh \
+	$BUILD_STAMP \
 	../../common/tools/qemu-aarch64-static \
 	$WDIR
 

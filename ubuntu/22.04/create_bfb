@@ -91,7 +91,8 @@ WDIR=${WDIR:-/root/workspace/bfb}
 echo "Work directory: $WDIR"
 
 ubuntu_IMAGE=`cat /etc/mlnx-release`
-ubuntu_BFB=${ubuntu_IMAGE}.bfb
+bfb_build_info=`cat /etc/buildstamp`
+ubuntu_BFB=${ubuntu_IMAGE}-${bfb_build_info}.bfb
 
 PATH=$PATH:/opt/mellanox/scripts:/opt/mellanox/scripts/bin
 mkbfb=`which mlx-mkbfb`

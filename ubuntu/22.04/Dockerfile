@@ -7,6 +7,7 @@ ADD qemu-aarch64-static /usr/bin/
 WORKDIR /root/workspace
 ADD install.sh .
 ADD create_bfb .
+ADD build-stamp.txt .
 ADD mlxbf-bootimages.deb .
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -107,5 +108,6 @@ RUN mkdir -p /boot/efi/EFI/ubuntu/; \
 	/boot/efi/EFI/BOOT/
 
 RUN sed -i -e "s/signed/@IMAGE_TYPE@@CUSTOM_VERSION@/" /etc/mlnx-release
+RUN cp build-stamp.txt /etc/buildstamp
 
 CMD ["/root/workspace/create_bfb", "-k", "5.15.0-1003.28.ga8d758d-bluefield"]
