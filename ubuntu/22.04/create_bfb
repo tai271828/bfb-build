@@ -276,12 +276,7 @@ sudo mkdir -p ./etc/infiniband
 sudo cp /etc/infiniband/vf-net-link-name.sh ./etc/infiniband/vf-net-link-name.sh
 
 # script to add repositories and install packages
-cat /root/workspace/build.conf
-source /root/workspace/build.conf
-PPA="deb https://$PPA_ACCESS_TOKEN@$PPA_BASE"
-PPA_SOURCE_LIST=/etc/apt/sources.list.d/private-ppa.list
-echo $PPA
-echo $PPA_KEY_INFO
+sudo add-apt-repository --yes --update ppa:canonical-kernel-bluefield/proposed
 
 cat > /etc/apt/sources.list.d/ubuntu-jammy-proposed.list << EOF
 # Enable Ubuntu proposed archive
@@ -294,18 +289,14 @@ cat > hook.sh << EOF
 
 set -ex
 
-## add repositories
-echo $PPA >> $PPA_SOURCE_LIST
-apt-key adv --recv-keys --keyserver keyserver.ubuntu.com --verbose $PPA_KEY_INFO
 # workaround for NVBF3-28 and LP:#1990528
 # hard-coded source list contains nonexistent repo
 rm -f /etc/apt/sources.list.d/doca.list
 apt update
 
 ls /etc/apt/sources.list.d/
-cat $PPA_SOURCE_LIST
 
-DEBIAN_FRONTEND=noninteractive apt -y install linux-bluefield linux-tools-bluefield linux-bluefield-modules
+DEBIAN_FRONTEND=noninteractive apt -y install linux-bluefield linux-bluefield-modules-bluefield
 
 ## set environment variables
 echo ====== export ======

@@ -55,7 +55,6 @@ wget --no-verbose -O $WDIR/doca-repo.deb https://linux.mellanox.com/public/repo/
 cp	Dockerfile \
 	create_bfb \
 	install.sh \
-	build.conf \
 	../../common/tools/qemu-aarch64-static \
 	$WDIR
 

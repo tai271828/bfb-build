@@ -5,7 +5,6 @@ Add doca-repo.deb /tmp/
 ADD qemu-aarch64-static /usr/bin/
 
 WORKDIR /root/workspace
-ADD build.conf .
 ADD install.sh .
 ADD create_bfb .
 ADD mlxbf-bootimages.deb .
