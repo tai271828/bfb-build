@@ -68,8 +68,6 @@ cp	Dockerfile \
 
 cd $WDIR
 
-echo "Downloading DOCA services..."
-wget --quiet -r -np -nH --cut-dirs=5 -R "index.html*" ${BASE_URL}/doca/${DOCA_VERSION}/services/
 echo "Downloading $DISTRO base image..."
 wget -q --no-check-certificate $DISTRO_BASE_URL
 docker_image=bfb_runtime_${DISTRO,,}${DISTRO_VERSION,,}
