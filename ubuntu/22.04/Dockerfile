@@ -9,8 +9,6 @@ ARG BSP_VERSION
 ARG DISTRO
 ARG DISTRO_VERSION
 WORKDIR /root/workspace
-ADD install.sh .
-ADD create_bfb .
 ADD build_ubuntu_bfb .
 ADD mlxbf-bootimages.deb .
 
@@ -49,5 +47,7 @@ RUN mkdir -p /boot/efi/EFI/ubuntu/; \
 	   /usr/lib/shim/fbaa64.efi \
 	/boot/efi/EFI/BOOT/
 
+ADD create_bfb .
+ADD install.sh .
 
 CMD ["bash", "-x", "/root/workspace/build_ubuntu_bfb"]
