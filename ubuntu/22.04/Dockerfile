@@ -5,6 +5,7 @@ ADD qemu-aarch64-static /usr/bin/
 ADD mlxbf-scripts_arm64.deb /tmp
 ADD mlxbf-bootctl_arm64.deb /tmp
 ADD ubuntu-core-22-arm64.img /
+ADD COMMIT_HASH /
 
 ARG BASE_URL
 ARG DOCA_VERSION

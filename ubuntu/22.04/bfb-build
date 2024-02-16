@@ -62,6 +62,8 @@ echo "Downloading mlxbf-bootimages..."
 wget -q -P $WDIR -r --no-verbose --no-directories -l1 --no-parent -A 'mlxbf-bootimages*arm64.deb' ${BASE_URL}/bluefield/${BSP_VERSION}/bootimages/${IMAGE_TYPE}/
 mv $WDIR/mlxbf-bootimages*arm64.deb $WDIR/mlxbf-bootimages.deb
 
+git rev-parse --short HEAD > $WDIR/COMMIT_HASH
+
 cp	Dockerfile \
 	build_ubuntu_bfb \
 	create_bfb \
