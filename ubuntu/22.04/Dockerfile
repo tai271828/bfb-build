@@ -1,7 +1,7 @@
 #  docker build -t bfb_runtime_ubuntu22.04 -f Dockerfile .
 FROM scratch
-#Add jammy-server-cloudimg-arm64-root.tar.xz /
-#ADD qemu-aarch64-static /usr/bin/
+Add jammy-server-cloudimg-arm64-root.tar.xz /
+ADD qemu-aarch64-static /usr/bin/
 
 ARG BASE_URL
 ARG DOCA_VERSION
@@ -9,10 +9,10 @@ ARG BSP_VERSION
 ARG DISTRO
 ARG DISTRO_VERSION
 WORKDIR /root/workspace
-#ADD install.sh .
-#ADD create_bfb .
-#ADD build_ubuntu_bfb .
-#ADD mlxbf-bootimages.deb .
+ADD install.sh .
+ADD create_bfb .
+ADD build_ubuntu_bfb .
+ADD mlxbf-bootimages.deb .
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV FLASH_KERNEL_SKIP=yes
