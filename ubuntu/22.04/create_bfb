@@ -288,11 +288,6 @@ sudo mkdir -p ./lib/firmware/mellanox/boot/
 sudo cp /lib/firmware/mellanox/boot/default.bfb ./lib/firmware/mellanox/boot/default.bfb
 sudo cp -a /lib/firmware/mellanox/boot/capsule ./lib/firmware/mellanox/boot/
 
-sudo mkdir -p ./lib/udev/rules.d
-sudo cp /lib/udev/rules.d/82-net-setup-link.rules ./lib/udev/rules.d/82-net-setup-link.rules
-sudo mkdir -p ./etc/infiniband
-sudo cp /etc/infiniband/vf-net-link-name.sh ./etc/infiniband/vf-net-link-name.sh
-
 sudo mkdir -p mnt
 
 ex mkdir -p ubuntu
