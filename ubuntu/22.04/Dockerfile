@@ -2,6 +2,8 @@
 FROM scratch
 Add jammy-server-cloudimg-arm64-root.tar.xz /
 ADD qemu-aarch64-static /usr/bin/
+ADD mlxbf-scripts_arm64.deb /tmp
+Run dpkg -i /tmp/mlxbf-scripts_arm64.deb
 
 ARG BASE_URL
 ARG DOCA_VERSION
