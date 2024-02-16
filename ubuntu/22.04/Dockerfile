@@ -2,6 +2,8 @@
 FROM scratch
 Add jammy-server-cloudimg-arm64-root.tar.xz /
 ADD qemu-aarch64-static /usr/bin/
+ADD mlxbf-scripts_arm64.deb /tmp
+ADD mlxbf-bootctl_arm64.deb /tmp
 
 ARG BASE_URL
 ARG DOCA_VERSION
@@ -20,6 +22,9 @@ ENV RUN_FW_UPDATER=no
 RUN mkdir -p /run/systemd; echo docker > /run/systemd/container
 
 RUN apt update
+RUN dpkg -i --force-overwrite /root/workspace/mlxbf-bootimages*.deb
+RUN dpkg -i /tmp/mlxbf-bootctl_arm64.deb
+RUN dpkg -i /tmp/mlxbf-scripts_arm64.deb
 RUN apt upgrade -y
 RUN apt remove --purge -y snapd plymouth
 RUN apt autoremove -y
