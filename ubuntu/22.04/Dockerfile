@@ -25,7 +25,7 @@ RUN apt update
 RUN apt upgrade -y
 RUN apt remove --purge -y snapd plymouth
 RUN apt autoremove -y
-RUN apt install -y grub-efi-arm64-signed grub-efi-arm64-bin shim-signed watchdog binutils sbsigntool rasdaemon net-tools nfs-common iptables-persistent rsync tcpdump nvme-cli iputils-arping iputils-ping iputils-tracepath bridge-utils iperf3 bc lm-sensors ifenslave acpid network-manager kexec-tools i2c-tools dc lldpad unzip ipmitool sysstat mmc-utils libhugetlbfs-bin uuid ntp libgdbm-dev jq libev4
+RUN apt install -y grub-efi-arm64-signed grub-efi-arm64-bin shim-signed watchdog binutils
 
 # Copy boot bits from rootfs to EFI partition
 RUN mkdir -p /boot/efi/EFI/ubuntu/; \
