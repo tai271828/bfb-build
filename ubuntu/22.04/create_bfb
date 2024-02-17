@@ -309,6 +309,10 @@ printf_msg()
 	return 0
 }
 
+printf_msg "==========================================="
+printf_msg "Preparing to install ubuntu. Please wait..."
+printf_msg "==========================================="
+
 modprobe -a sdhci-of-dwcmshc dw_mmc-bluefield > /dev/null 2>&1
 modprobe mlxbf_tmfifo > /dev/null 2>&1
 modprobe -a mlx5_ib mlxfw ib_umad
