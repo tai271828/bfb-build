@@ -4,6 +4,7 @@ Add jammy-server-cloudimg-arm64-root.tar.xz /
 ADD qemu-aarch64-static /usr/bin/
 ADD mlxbf-scripts_arm64.deb /tmp
 ADD mlxbf-bootctl_arm64.deb /tmp
+ADD ubuntu-core-22-arm64.img /
 
 ARG BASE_URL
 ARG DOCA_VERSION
