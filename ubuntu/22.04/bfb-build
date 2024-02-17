@@ -68,7 +68,6 @@ cp	Dockerfile \
 	build_ubuntu_bfb \
 	create_bfb \
 	install.sh \
-	../../../ubuntu-core-22-arm64.img.xz \
 	../../common/tools/qemu-aarch64-static \
 	$WDIR
 
