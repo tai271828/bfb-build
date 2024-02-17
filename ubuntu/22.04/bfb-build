@@ -70,6 +70,9 @@ cp	Dockerfile \
 	../../common/tools/qemu-aarch64-static \
 	$WDIR
 
+echo "debugging: how big is the core image?"
+ls -alh ../../../ubuntu-core-22-arm64.img
+
 cd $WDIR
 
 echo "Downloading $DISTRO base image..."
