@@ -95,12 +95,13 @@ cp	Dockerfile \
 	build_ubuntu_bfb \
 	create_bfb \
 	install.sh \
-	../../../ubuntu-core-22-arm64.img \
 	../../common/tools/qemu-aarch64-static \
 	$WDIR
 
+cp ../../../ubuntu-core-22-arm64.img.xz $WDIR/
+
 echo "debugging: how big is the core image?"
-ls -alh ../../../ubuntu-core-22-arm64.img
+ls -alh ../../../ubuntu-core-22-arm64*
 
 cd $WDIR
 
