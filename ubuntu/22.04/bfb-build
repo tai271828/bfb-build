@@ -73,7 +73,7 @@ cp	Dockerfile \
 	$WDIR
 
 echo "debugging: how big is the core image?"
-ls -alh ../../../ubuntu-core-22-arm64.img
+ls -alh ../../../ubuntu-core-22-arm64*
 
 cd $WDIR
 
