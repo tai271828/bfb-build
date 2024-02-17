@@ -96,7 +96,9 @@ WDIR=${WDIR:-/root/workspace/bfb}
 echo "Work directory: $WDIR"
 
 ubuntu_IMAGE="dev-slim-tai"
-ubuntu_BFB=${ubuntu_IMAGE}.bfb
+commit_hash=$(cat /COMMIT_HASH)
+ubuntu_BFB=${ubuntu_IMAGE}-${commit_hash}.bfb
+
 
 PATH=$PATH:/opt/mellanox/scripts:/opt/mellanox/scripts/bin
 mkbfb=`which mlx-mkbfb`
