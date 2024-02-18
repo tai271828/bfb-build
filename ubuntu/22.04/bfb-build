@@ -53,14 +53,41 @@ BASE_URL=${BASE_URL:-"https://linux.mellanox.com/public/repo"}
 
 mkdir -p $WDIR
 echo "Downloading mlxbf-scripts..."
-wget -q -P $WDIR -r --no-verbose --no-directories -l1 --no-parent -A 'mlxbf-scripts_3.6_arm64.deb' ${BASE_URL}/doca/${DOCA_VERSION}/${DISTRO}${DISTRO_VERSION}/aarch64/
-mv $WDIR/mlxbf-scripts_3.6_arm64.deb $WDIR/mlxbf-scripts_arm64.deb
+if [ -f "../../../mlxbf-scripts_arm64.deb" ]; then
+	echo "Using existing mlxbf-scripts_arm64.deb"
+	cp ../../../mlxbf-scripts_arm64.deb $WDIR/mlxbf-scripts_arm64.deb
+else
+	wget -q -P $WDIR -r --no-verbose --no-directories -l1 --no-parent -A 'mlxbf-scripts_3.6_arm64.deb' ${BASE_URL}/doca/${DOCA_VERSION}/${DISTRO}${DISTRO_VERSION}/aarch64/
+	mv $WDIR/mlxbf-scripts_3.6_arm64.deb $WDIR/mlxbf-scripts_arm64.deb
+fi
 echo "Downloading mlxbf-bootctl..."
-wget -q -P $WDIR -r --no-verbose --no-directories -l1 --no-parent -A 'mlxbf-bootctl_2.1_arm64.deb' ${BASE_URL}/doca/${DOCA_VERSION}/${DISTRO}${DISTRO_VERSION}/aarch64/
-mv $WDIR/mlxbf-bootctl_2.1_arm64.deb $WDIR/mlxbf-bootctl_arm64.deb
+if [ -f "../../../mlxbf-bootctl_arm64.deb" ]; then
+	echo "Using existing mlxbf-bootctl_arm64.deb"
+	cp ../../../mlxbf-bootctl_arm64.deb $WDIR/mlxbf-bootctl_arm64.deb
+else
+	wget -q -P $WDIR -r --no-verbose --no-directories -l1 --no-parent -A 'mlxbf-bootctl_2.1_arm64.deb' ${BASE_URL}/doca/${DOCA_VERSION}/${DISTRO}${DISTRO_VERSION}/aarch64/
+	mv $WDIR/mlxbf-bootctl_2.1_arm64.deb $WDIR/mlxbf-bootctl_arm64.deb
+fi
 echo "Downloading mlxbf-bootimages..."
-wget -q -P $WDIR -r --no-verbose --no-directories -l1 --no-parent -A 'mlxbf-bootimages*arm64.deb' ${BASE_URL}/bluefield/${BSP_VERSION}/bootimages/${IMAGE_TYPE}/
-mv $WDIR/mlxbf-bootimages*arm64.deb $WDIR/mlxbf-bootimages.deb
+if [ -f "../../../mlxbf-bootimages_arm64.deb" ]; then
+	echo "Using existing mlxbf-bootimages_arm64.deb"
+	cp ../../../mlxbf-bootimages_arm64.deb $WDIR/mlxbf-bootimages_arm64.deb
+else
+	wget -q -P $WDIR -r --no-verbose --no-directories -l1 --no-parent -A 'mlxbf-bootimages*arm64.deb' ${BASE_URL}/bluefield/${BSP_VERSION}/bootimages/${IMAGE_TYPE}/
+	mv $WDIR/mlxbf-bootimages*arm64.deb $WDIR/mlxbf-bootimages.deb
+fi
+echo "Downloading $DISTRO base image..."
+if [ -f "../../../jammy-server-cloudimg-arm64-root.tar.xz" ]; then
+	echo "Using existing jammy-server-cloudimg-arm64-root.tar.xz"
+	cp ../../../jammy-server-cloudimg-arm64-root.tar.xz $WDIR/
+else
+	wget -q --show-progress --no-check-certificate $DISTRO_BASE_URL
+fi
+
+if [ -d "../../../kernel-debs" ]; then
+	echo "Using existing kernel-debs"
+	cp -r ../../../kernel-debs $WDIR/
+fi
 
 git rev-parse --short HEAD > $WDIR/COMMIT_HASH
 
@@ -77,8 +104,6 @@ ls -alh ../../../ubuntu-core-22-arm64.img
 
 cd $WDIR
 
-echo "Downloading $DISTRO base image..."
-wget -q --no-check-certificate $DISTRO_BASE_URL
 docker_image=bfb_runtime_${DISTRO,,}${DISTRO_VERSION,,}
 
 docker rm -f BlueField_OS_${DISTRO}_${DISTRO_VERSION} 2> /dev/null
