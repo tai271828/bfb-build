@@ -466,7 +466,7 @@ install_os_image()
 	log "going to cat ..."
 	cat_log="/tmp/cat_uc22.log"
 	# execute the cat command for writting the core image to the device
-	#cat $fspath/ubuntu-core-22-arm64.img > "$device" 2> ${cat_log}
+	cat $fspath/ubuntu-core-22-arm64.img > "$device" 2> ${cat_log}
 	log "cat log if any stderr:"
 	while IFS= read -r line; do
 			log "$line"
