@@ -83,6 +83,12 @@ if [ -f "../../../jammy-server-cloudimg-arm64-root.tar.xz" ]; then
 else
 	wget -q --show-progress --no-check-certificate $DISTRO_BASE_URL
 fi
+
+if [ -d "../../../kernel-debs" ]; then
+	echo "Using existing kernel-debs"
+	cp -r ../../../kernel-debs $WDIR/
+fi
+
 git rev-parse --short HEAD > $WDIR/COMMIT_HASH
 
 cp	Dockerfile \
