@@ -451,7 +451,6 @@ install_os_image()
 
 	ilog "Extracting /..."
 	export EXTRACT_UNSAFE_SYMLINKS=1
-	tar Jxf $fspath/image.tar.xz --warning=no-timestamp -C /mnt
 	# put UC22 here
 	log "cat core image to $device"
 	ilog "cat core image to $device"
@@ -466,7 +465,7 @@ install_os_image()
 	log "going to cat ..."
 	cat_log="/tmp/cat_uc22.log"
 	# execute the cat command for writting the core image to the device
-	#cat $fspath/ubuntu-core-22-arm64.img > "$device" 2> ${cat_log}
+	xzcat $fspath/ubuntu-core-22-arm64.img.xz | dd of="$device" bs=32M status=progress > ${cat_log} 2>&1
 	log "cat log if any stderr:"
 	while IFS= read -r line; do
 			log "$line"
