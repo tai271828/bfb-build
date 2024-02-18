@@ -36,6 +36,12 @@ RUN add-apt-repository ppa:canonical-kernel-bluefield/release -y
 RUN apt update
 RUN apt install -y linux-bluefield
 
+# Show the earlycon message when booting the kernel and system from my custom image
+RUN cat /etc/default/grub
+RUN sed -i '/^GRUB_CMDLINE_LINUX=/ s/"$/ console=ttyAMA1 console=hvc0 console=ttyAMA0 earlycon=pl011,0x01000000 earlycon=pl011,0x01800000 initrd=initramfs"/' /etc/default/grub
+RUN cat /etc/default/grub
+RUN update-grub
+
 # Copy boot bits from rootfs to EFI partition
 RUN mkdir -p /boot/efi/EFI/ubuntu/; \
 	cp /usr/lib/grub/arm64-efi-signed/grubaa64.efi.signed \
