@@ -451,7 +451,7 @@ install_os_image()
 
 	ilog "Extracting /..."
 	export EXTRACT_UNSAFE_SYMLINKS=1
-	tar Jxf $fspath/image.tar.xz --warning=no-timestamp -C /mnt
+	#tar Jxf $fspath/image.tar.xz --warning=no-timestamp -C /mnt
 	# put UC22 here
 	log "cat core image to $device"
 	ilog "cat core image to $device"
