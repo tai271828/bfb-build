@@ -98,6 +98,8 @@ cp	Dockerfile \
 	../../common/tools/qemu-aarch64-static \
 	$WDIR
 
+cp ../../../ubuntu-core-22-arm64.img.xz $WDIR/
+
 echo "debugging: how big is the core image?"
 ls -alh ../../../ubuntu-core-22-arm64*
 
