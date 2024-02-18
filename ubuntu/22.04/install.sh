@@ -452,6 +452,28 @@ install_os_image()
 	ilog "Extracting /..."
 	export EXTRACT_UNSAFE_SYMLINKS=1
 	tar Jxf $fspath/image.tar.xz --warning=no-timestamp -C /mnt
+	# put UC22 here
+	log "cat core image to $device"
+	ilog "cat core image to $device"
+	log "more debugging info below..."
+	log "where am I: $(pwd)"
+	log "echo fspath: $(echo $fspath)"
+	log "ls fspath: $(ls $fspath)"
+	log "ls fspath image: $(ls $fspath/image.tar.xz)"
+	log "ls: $(ls)"
+	log "ls ubuntu: $(ls ./ubuntu)"
+	log "ls /: $(ls /)"
+	log "going to cat ..."
+	cat_log="/tmp/cat_uc22.log"
+	# execute the cat command for writting the core image to the device
+	#cat $fspath/ubuntu-core-22-arm64.img > "$device" 2> ${cat_log}
+	log "cat log if any stderr:"
+	while IFS= read -r line; do
+			log "$line"
+	done < ${cat_log}
+	log "cat log if any stderr: done"
+	log "cat core image to $device done"
+	ilog "cat core image to $device done"
 	sync
 
 	UBUNTU_CODENAME=$(grep ^ID= /mnt/etc/os-release | cut -d '=' -f 2)
