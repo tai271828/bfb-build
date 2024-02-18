@@ -681,6 +681,14 @@ EOF
 	ilog "$(chroot /mnt env PATH=$CHROOT_PATH /usr/sbin/grub-mkconfig -o /boot/grub/grub.cfg)"
 	ilog "$(chroot /mnt env PATH=$CHROOT_PATH /usr/sbin/grub-set-default 0)"
 
+	log "Show the earlycon message when booting the kernel and system from my custom image"
+	log "$(cat /mnt/etc/default/grub)"
+	# inspired by mmcblk0p2 (very similar to boot-args-v2)
+	# boot-args-v0 does not work
+	log "$(sed -i '/^GRUB_CMDLINE_LINUX=/ s/"$/ cconsole=ttyS0 console=hvc0 console=ttyAMA0 earlycon=pl011,0x13010000"/' /mnt/etc/default/grub)"
+	log "$(cat /mnt/etc/default/grub)"
+	log "$(chroot /mnt env PATH=$CHROOT_PATH /usr/sbin/update-grub)"
+
 	if function_exists bfb_modify_os; then
 		log "INFO: Running bfb_modify_os from bf.cfg"
 		bfb_modify_os

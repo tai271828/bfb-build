@@ -36,6 +36,7 @@ RUN add-apt-repository ppa:canonical-kernel-bluefield/release -y
 RUN apt update
 RUN apt install -y linux-bluefield
 
+
 # Copy boot bits from rootfs to EFI partition
 RUN mkdir -p /boot/efi/EFI/ubuntu/; \
 	cp /usr/lib/grub/arm64-efi-signed/grubaa64.efi.signed \
