@@ -35,6 +35,7 @@ RUN apt install -y grub-efi-arm64-signed grub-efi-arm64-bin shim-signed watchdog
 # RUN add-apt-repository ppa:canonical-kernel-bluefield/release -y
 # RUN apt update
 # RUN apt install -y linux-bluefield
+RUN apt install -y wireless-regdb
 RUN mkdir -p /tmp/kernel-debs
 ADD kernel-debs /tmp/kernel-debs
 RUN dpkg -i /tmp/kernel-debs/*.deb
