@@ -711,6 +711,9 @@ EOF
 	log "$(cat /mnt/etc/default/grub)"
 	log "$(chroot /mnt env PATH=$CHROOT_PATH /usr/sbin/update-grub)"
 
+	log "DEBUGGIG: dump debugging info"
+	log "$(cat /boot/grub/grub.cfg)"
+	log "$(cat /mnt/var/lib/cloud/seed/nocloud-net/user-data)"
 	if function_exists bfb_modify_os; then
 		log "INFO: Running bfb_modify_os from bf.cfg"
 		bfb_modify_os
