@@ -281,122 +281,12 @@ else
     exit 1
 fi
 
-# Customisations per PSID
-FLINT=""
-if [ -x /usr/bin/flint ]; then
-	FLINT=/usr/bin/flint
-elif [ -x /usr/bin/mstflint ]; then
-	FLINT=/usr/bin/mstflint
-fi
-
-if [ -x /usr/bin/mst ]; then
-	/usr/bin/mst start > /dev/null 2>&1
-fi
-
 # Flash image
-bs=512
-reserved=34
-start_reserved=2048
-boot_size_megs=50
-mega=$((2**20))
-boot_size_bytes=$(($boot_size_megs * $mega))
-giga=$((2**30))
-MIN_DISK_SIZE4DUAL_BOOT=$((16*$giga)) #16GB
-common_size_bytes=$((10*$giga))
-
-disk_sectors=$(fdisk -l $device 2> /dev/null | grep "Disk $device:" | awk '{print $7}')
-disk_size=$(fdisk -l $device 2> /dev/null | grep "Disk $device:" | awk '{print $5}')
-disk_end=$((disk_sectors - reserved))
-
-pciids=$(lspci -nD 2> /dev/null | grep 15b3:a2d[26c] | awk '{print $1}')
-
-set -- $pciids
-pciid=$1
-
-PSID=""
-if [ -n "$FLINT" ]; then
-	PSID=$($FLINT -d $pciid q | grep PSID | awk '{print $NF}')
-
-	case "${PSID}" in
-		MT_0000000667|MT_0000000698)
-		DUAL_BOOT="yes"
-		;;
-	esac
-	ilog "PSID: $PSID"
-fi
-
 if [ "X$mode" == "Xmanufacturing" ]; then
 
-if [ $disk_size -lt $MIN_DISK_SIZE4DUAL_BOOT ]; then
-	if [ "X$DUAL_BOOT" == "Xyes" ]; then
-		if [ "X$FORCE_DUAL_BOOT" == "Xyes" ]; then
-			log "WARN: Dual boot is not supported for EMMC <= 16GB but FORCE_DUAL_BOOT is set"
-			DUAL_BOOT="yes"
-			common_size_bytes=$((3*$giga/2))
-		else
-			log "WARN: Dual boot is not supported for EMMC <= 16GB"
-			DUAL_BOOT="no"
-		fi
-	fi
-fi
+	log "INFO: destroying partition table via dd zero"
+	dd if=/dev/zero of="$device" bs="$bs" count=1
 
-dd if=/dev/zero of="$device" bs="$bs" count=1
-
-ilog "Creating partitions on $device using sfdisk:"
-
-boot_size=$(($boot_size_bytes/$bs))
-if [ "X$DUAL_BOOT" == "Xyes" ]; then
-	common_size=${COMMON_SIZE_SECTORS:-$(($common_size_bytes/$bs))}
-	common_start=$(($disk_end - $common_size))
-	root_size=$((($common_start - $start_reserved - 2*$boot_size)/2))
-	boot1_start=$start_reserved
-	root1_start=$(($start_reserved + $boot_size))
-	boot2_start=$(($root1_start + $root_size))
-	root2_start=$(($boot2_start + $boot_size))
-
-(
-sfdisk -f "$device" << EOF
-label: gpt
-label-id: A2DF9E70-6329-4679-9C1F-1DAF38AE25AE
-device: ${device}
-unit: sectors
-first-lba: $reserved
-last-lba: $disk_end
-
-${device}p1 : start=$boot1_start, size=$boot_size, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B, name="EFI System", bootable
-${device}p2 : start=$root1_start ,size=$root_size, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, name="writable"
-${device}p3 : start=$boot2_start, size=$boot_size, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B, name="EFI System", bootable
-${device}p4 : start=$root2_start ,size=$root_size, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, name="writable"
-${device}p5 : start=$common_start ,size=$common_size, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, name="writable"
-EOF
-) >> $LOG 2>&1
-
-else # Single OS configuration
-	boot_start=$start_reserved
-	boot_size=$(($boot_size_bytes/$bs))
-	root_start=$(($boot_start + $boot_size))
-	root_end=$disk_end
-	root_size=$(($root_end - $root_start + 1))
-(
-sfdisk -f "$device" << EOF
-label: gpt
-label-id: A2DF9E70-6329-4679-9C1F-1DAF38AE25AE
-device: ${device}
-unit: sectors
-first-lba: $reserved
-last-lba: $disk_end
-
-${device}p1 : start=$boot_start, size=$boot_size, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B, name="EFI System", bootable
-${device}p2 : start=$root_start ,size=$root_size, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, name="writable"
-EOF
-) >> $LOG 2>&1
-fi
-
-sync
-
-# Refresh partition table
-sleep 1
-blockdev --rereadpt ${device} > /dev/null 2>&1
 fi # manufacturing mode
 
 bind_partitions()
