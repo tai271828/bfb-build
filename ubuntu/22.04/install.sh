@@ -464,16 +464,16 @@ install_os_image()
 	log "ls ubuntu: $(ls ./ubuntu)"
 	log "ls /: $(ls /)"
 	log "going to cat ..."
-	cat_log="/tmp/cat_uc22.log"
+	flash_log="/tmp/cat_uc22.log"
 	# execute the cat command for writting the core image to the device
-	xzcat $fspath/ubuntu-core-22-arm64.img.xz | dd of="$device" bs=32M status=progress > ${cat_log} 2>&1
+	xzcat $fspath/ubuntu-core-22-arm64.img.xz | dd of="$device" bs=32M status=progress > ${flash_log} 2>&1
 	log "cat log if any stderr:"
 	while IFS= read -r line; do
 			log "$line"
-	done < ${cat_log}
+	done < ${flash_log}
 	log "cat log if any stderr: done"
-	log "cat core image to $device done"
-	ilog "cat core image to $device done"
+	log "cat core image to $device : done"
+	ilog "cat core image to $device : done"
 	sync
 
 	UBUNTU_CODENAME=$(grep ^ID= /mnt/etc/os-release | cut -d '=' -f 2)
