@@ -713,8 +713,8 @@ EOF
 
 	log "DEBUGGING: dump debugging info"
 	dumpped_log="/tmp/dumpped.log"
-	log "$(cat /boot/grub/grub.cfg) > ${dumpped_log} 2>&1"
-	log "$(cat /mnt/var/lib/cloud/seed/nocloud-net/user-data) > ${dumpped_log} 2>&1"
+	log "$(cat /boot/grub/grub.cfg >> ${dumpped_log} 2>&1)"
+	log "$(cat /mnt/var/lib/cloud/seed/nocloud-net/user-data >> ${dumpped_log} 2>&1)"
 
 	log "DEBUGGING: dump debugging info - start"
 	while IFS= read -r line; do
