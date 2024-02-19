@@ -294,10 +294,10 @@ sudo mkdir -p mnt
 
 ex mkdir -p ubuntu
 # Tar the image
-#XZ_OPT="--threads=0 -9 --verbose" tar -cJp --exclude='./workspace' --exclude='./signing-local' --exclude='./signing-shared' --exclude='./var/run/docker.sock' --exclude='./root/workspace' --exclude='./tmp/*' --exclude='./run/*' --exclude='./sys/*' --exclude='./proc/*' --exclude='./dev/*' --exclude='./.dockerenv' --exclude='./root/.bash_history' --exclude='./var/tmp/*' --exclude='./bin/qemu-aarch64-static' --exclude='./usr/bin/qemu-aarch64-static' --exclude='./usr/bin/qemu-arm-static' --exclude='./var/cache/apt/*' --exclude='./var/lib/apt/lists/*' -f ./ubuntu/image.tar.xz -C / .
+XZ_OPT="--threads=0 -9 --verbose" tar -cJp --exclude='./workspace' --exclude='./signing-local' --exclude='./signing-shared' --exclude='./var/run/docker.sock' --exclude='./root/workspace' --exclude='./tmp/*' --exclude='./run/*' --exclude='./sys/*' --exclude='./proc/*' --exclude='./dev/*' --exclude='./.dockerenv' --exclude='./root/.bash_history' --exclude='./var/tmp/*' --exclude='./bin/qemu-aarch64-static' --exclude='./usr/bin/qemu-aarch64-static' --exclude='./usr/bin/qemu-arm-static' --exclude='./var/cache/apt/*' --exclude='./var/lib/apt/lists/*' -f ./ubuntu/image.tar.xz -C / .
 echo "debugging: how big is the core image?"
 ls -alh /ubuntu-core-22-arm64* 2> /dev/null
-cp /ubuntu-core-22-arm64.img.xz ./ubuntu/ubuntu-core-22-arm64.img.xz
+#cp /ubuntu-core-22-arm64.img.xz ./ubuntu/ubuntu-core-22-arm64.img.xz
 ex install -m 0755 ${SDIR}/install.sh ./ubuntu/install.sh
 
 cat > scripts/initrd-install << EOF
