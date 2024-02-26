@@ -707,7 +707,7 @@ EOF
 	log "$(cat /mnt/etc/default/grub)"
 	# inspired by mmcblk0p2 (very similar to boot-args-v2)
 	# boot-args-v0 does not work
-	log "$(sed -i '/^GRUB_CMDLINE_LINUX=/ s/"$/ cconsole=ttyS0 console=hvc0 console=ttyAMA0 earlycon=pl011,0x13010000"/' /mnt/etc/default/grub)"
+	log "$(sed -i '/^GRUB_CMDLINE_LINUX=/ s/"$/ console=hvc0 earlycon=pl011,0x13010000"/' /mnt/etc/default/grub)"
 	log "$(cat /mnt/etc/default/grub)"
 	log "$(chroot /mnt env PATH=$CHROOT_PATH /usr/sbin/update-grub)"
 
