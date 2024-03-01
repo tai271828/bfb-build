@@ -129,6 +129,9 @@ docker run -t --rm --privileged -e container=docker \
 	--mount type=bind,source=/proc,target=/proc \
 	${docker_image}
 
-readlink -f *.bfb
+path_built_image=$(readlink -f *.bfb)
+fixed_path_built_image="/tmp/my_bfb.bfb"
+ln -s ${path_built_image} ${fixed_path_built_image}
 
+echo "${path_built_image} links to ${path_built_image}"
 echo "Default user/password is: ubuntu/ubuntu"
