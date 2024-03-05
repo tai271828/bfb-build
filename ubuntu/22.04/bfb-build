@@ -131,7 +131,8 @@ docker run -t --rm --privileged -e container=docker \
 
 path_built_image=$(readlink -f *.bfb)
 fixed_path_built_image="/tmp/my_bfb.bfb"
-ln -s ${path_built_image} ${fixed_path_built_image}
+# use copy so we can direct the stream properly
+cp ${path_built_image} ${fixed_path_built_image}
 
 echo "${path_built_image} links to ${fixed_path_built_image}"
 echo "Default user/password is: ubuntu/ubuntu"
