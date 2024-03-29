@@ -358,6 +358,10 @@ install_os_image()
 	# bash-5.1#
 	bash
 	# Make it the boot partition
+	# in case anyone is using it
+	# try to workaround:
+	# mount: mounting none on /sys/firmware/efi/efivars failed: Device or resource busy
+	umount /sys/firmware/efi/efivars
 	mount -t efivarfs none /sys/firmware/efi/efivars
 	if efibootmgr | grep ubuntu; then
 		efibootmgr -b "$(efibootmgr | grep ubuntu | cut -c 5-8)" -B
