@@ -342,6 +342,8 @@ install_os_image()
 	# Refresh partition table
 	blockdev --rereadpt "$device" >> ${flash_log} 2>&1
 
+	# debugging. let us see if I can stop at this point
+	bash
 	# Make it the boot partition
 	mount -t efivarfs none /sys/firmware/efi/efivars
 	if efibootmgr | grep ubuntu; then
