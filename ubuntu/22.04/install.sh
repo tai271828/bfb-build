@@ -310,6 +310,8 @@ unmount_partitions()
 
 install_os_image()
 {
+	log "check who mounts efivars - head of install_os_image"
+	log "$(mount | grep efivars)"
 	OS_IMAGE=$1
 	if [ "X$DUAL_BOOT" == "Xyes" ]; then
 		if [ $OS_IMAGE -eq 0 ]; then
@@ -337,10 +339,16 @@ install_os_image()
 	log "going to cat ..."
 	flash_log="/tmp/cat_uc22.log"
 	# execute the cat command for writting the core image to the device
+	log "check who mounts efivars - on writing uc22"
+	log "$(mount | grep efivars)"
 	xzcat $fspath/ubuntu-core-22-arm64.img.xz | dd of="$device" bs=32M status=progress > ${flash_log} 2>&1
 	sync
 	# Refresh partition table
+	log "check who mounts efivars - on refreshing partition table"
+	log "$(mount | grep efivars)"
 	blockdev --rereadpt "$device" >> ${flash_log} 2>&1
+	log "check who mounts efivars - after refreshing partition table"
+	log "$(mount | grep efivars)"
 
 	# debugging. let us see if I can stop at this point
 	# [   23.026339] GPT: Use GNU Parted to correct GPT errors.
