@@ -343,6 +343,11 @@ install_os_image()
 	blockdev --rereadpt "$device" >> ${flash_log} 2>&1
 
 	# debugging. let us see if I can stop at this point
+	# [   23.026339] GPT: Use GNU Parted to correct GPT errors.
+	# [   23.031469]  nvme0n1: p1
+	# bash: cannot set terminal process group (-1): Inappropriate ioctl for device
+	# bash: no job control in this shell
+	# bash-5.1#
 	bash
 	# Make it the boot partition
 	mount -t efivarfs none /sys/firmware/efi/efivars
