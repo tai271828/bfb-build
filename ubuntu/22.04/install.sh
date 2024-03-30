@@ -357,6 +357,7 @@ EOF
 
 update_efi_bootmgr()
 {
+	set -x
 	ilog "Adding $distro boot entry:"
 	efivars_mount=0
 	if [ ! -d /sys/firmware/efi/efivars ]; then
@@ -386,6 +387,8 @@ update_efi_bootmgr()
 	if [ $efivars_mount -eq 1 ]; then
 		umount /sys/firmware/efi/efivars
 	fi
+	set +x
+	bash
 }
 
 configure_services()
