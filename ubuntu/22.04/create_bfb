@@ -224,8 +224,6 @@ for tool in $(dpkg -L mlxbf-scripts | grep bin/) \
 		$(dpkg -L kmod | grep -v share) \
 		$(dpkg -L pciutils | grep -v share) \
 		$(dpkg -L usbutils | grep -v share) \
-		$(dpkg -L mft) \
-		$(dpkg -L mft-oem) \
 		$(dpkg -L kernel-mft-modules) \
 		$(dpkg -L tar | grep -v share) \
 		xz efibootmgr bash getopt hexdump mstflint lspci perl \
