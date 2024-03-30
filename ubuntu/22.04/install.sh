@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 ###############################################################################
 #
 # Copyright 2023 NVIDIA Corporation
@@ -129,6 +129,8 @@ fw_reset()
 		log "INFO: NIC Firmware reset done"
 	fi
 }
+
+bash
 
 #
 # Set the Hardware Clock from the System Clock
@@ -740,6 +742,7 @@ if [ -e /lib/firmware/mellanox/boot/capsule/efi_sbkeysync.cap ]; then
 	ilog "$(bfrec --capsule /lib/firmware/mellanox/boot/capsule/efi_sbkeysync.cap)"
 fi
 
+bash
 # Make it the boot partition
 if efibootmgr | grep ${UBUNTU_CODENAME}; then
 	efibootmgr -b "$(efibootmgr | grep ${UBUNTU_CODENAME} | cut -c 5-8)" -B > /dev/null 2>&1
