@@ -350,19 +350,11 @@ install_os_image()
 	log "check who mounts efivars - after refreshing partition table"
 	log "$(mount | grep efivars)"
 
-	# debugging. let us see if I can stop at this point
-	# [   23.026339] GPT: Use GNU Parted to correct GPT errors.
-	# [   23.031469]  nvme0n1: p1
-	# bash: cannot set terminal process group (-1): Inappropriate ioctl for device
-	# bash: no job control in this shell
-	# bash-5.1#
-	bash
-	# Make it the boot partition
-	# in case anyone is using it
-	# try to workaround:
-	# mount: mounting none on /sys/firmware/efi/efivars failed: Device or resource busy
-	umount /sys/firmware/efi/efivars
-	mount -t efivarfs none /sys/firmware/efi/efivars
+	log "Remove old boot entries"
+	log "$(bfbootmgr --cleanall)"
+	/bin/rm -f /sys/firmware/efi/efivars/Boot* > /dev/null 2>&1
+	/bin/rm -f /sys/firmware/efi/efivars/dump-* > /dev/null 2>&1
+
 	if efibootmgr | grep ubuntu; then
 		efibootmgr -b "$(efibootmgr | grep ubuntu | cut -c 5-8)" -B
 	fi
