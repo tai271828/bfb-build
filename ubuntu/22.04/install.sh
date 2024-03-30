@@ -358,7 +358,7 @@ install_os_image()
 	if efibootmgr | grep ubuntu; then
 		efibootmgr -b "$(efibootmgr | grep ubuntu | cut -c 5-8)" -B
 	fi
-	efibootmgr -c -d "$device" -p 1 -L ubuntu -l "\EFI\ubuntu\grubaa64.efi"
+	efibootmgr -c -d "$device" -p 1 -L ubuntu -l "\EFI\boot\grubaa64.efi"
 
 	log "cat log if any stderr:"
 	while IFS= read -r line; do
