@@ -69,9 +69,9 @@ else
 	mv $WDIR/mlxbf-bootctl_2.1_arm64.deb $WDIR/mlxbf-bootctl_arm64.deb
 fi
 echo "Downloading mlxbf-bootimages..."
-if [ -f "../../../mlxbf-bootimages_arm64.deb" ]; then
+if [ -f "../../../mlxbf-bootimages.deb" ]; then
 	echo "Using existing mlxbf-bootimages_arm64.deb"
-	cp ../../../mlxbf-bootimages_arm64.deb $WDIR/mlxbf-bootimages_arm64.deb
+	cp ../../../mlxbf-bootimages.deb $WDIR/mlxbf-bootimages.deb
 else
 	wget -q -P $WDIR -r --no-verbose --no-directories -l1 --no-parent -A 'mlxbf-bootimages*arm64.deb' ${BASE_URL}/bluefield/${BSP_VERSION}/bootimages/${IMAGE_TYPE}/
 	mv $WDIR/mlxbf-bootimages*arm64.deb $WDIR/mlxbf-bootimages.deb
